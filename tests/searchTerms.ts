@@ -1,5 +1,5 @@
 export const searchTerms = {
-    valid: 'Smart Lock',
+    valid: 'Universal Smart Door Lock Camera',
     invalid: 'Lorem ipsum',
     empty: '   ',
   };
