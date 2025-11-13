@@ -27,6 +27,7 @@ export class Search {
     await expect(this.predictiveSearch).toBeVisible({ timeout: 5000 });
   }
   async verifyPredictiveSearchContainsSearchTerm(searchTerm: string) {
+    await this.searchInput.fill(searchTerm);
     await expect(
       this.predictiveSearch.locator('a[role="option"]')
     ).toContainText(searchTerm, { timeout: 5000 });
