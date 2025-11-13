@@ -7,7 +7,8 @@ export const contactsTerms = {
     phoneInput: '#ContactForm-phone',
     commentInput: '#ContactForm-body',
     alertSuccess: '.form__message.alert.alert--success',
-
+ 
+    // Test data
     nameText: 'John Doe',
     emailValid: 'john.doe@test.com',
     emailInvalid: 'johndoetestcom',
