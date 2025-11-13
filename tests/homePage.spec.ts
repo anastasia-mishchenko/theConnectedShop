@@ -161,37 +161,58 @@ test.describe("Home Page", () => {
     await sendButton.click();
     await expect(alertSuccess).toBeVisible({ timeout: 2000 });
   });
-  test("[Contacts][Negative] Negative tests for contact form", async ({
-    page,
-  }) => {
+  
+  test("[Contacts][Negative] Negative tests for contact ", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveURL("/");
     const contactTabLink = page.locator(contactsTerms.tabLink);
     await contactTabLink.click();
-    const nameInput = page.locator(contactsTerms.nameText);
+
+    const nameInput = page.locator(contactsTerms.nameInput);
     const emailInput = page.locator(contactsTerms.emailInput);
     const phoneInput = page.locator(contactsTerms.phoneInput);
     const commentInput = page.locator(contactsTerms.commentInput);
     const sendButton = page.getByRole("button", { name: "Send" });
 
-    //leave email empty (required field)
     await nameInput.fill(contactsTerms.nameText);
     await emailInput.fill(contactsTerms.emailEmpty);
     await phoneInput.fill(contactsTerms.phoneValid);
     await commentInput.fill(contactsTerms.commentText);
     await sendButton.click();
-
-    //enter invalid email
+    // Use page.$eval for correct element typing and to avoid validationMessage property error
+    const emptyEmailValidation = await page.$eval(
+      contactsTerms.emailInput,
+      (el: HTMLInputElement) => el.validationMessage
+    );
+    console.log("Empty email validation:", emptyEmailValidation);
+    expect(emptyEmailValidation).not.toBe("");
     await nameInput.fill(contactsTerms.nameText);
     await emailInput.fill(contactsTerms.emailInvalid);
     await phoneInput.fill(contactsTerms.phoneValid);
     await commentInput.fill(contactsTerms.commentText);
     await sendButton.click();
-    //enter invalid phone
+
+    // Use page.$eval for correct typing to access validationMessage
+    const invalidEmailValidation = await page.$eval(
+      contactsTerms.emailInput,
+      (el: HTMLInputElement) => el.validationMessage
+    );
+    console.log("Invalid email validation:", invalidEmailValidation);
+    expect(invalidEmailValidation).not.toBe("");
+    console.log("Invalid email validation:", invalidEmailValidation);
+    expect(invalidEmailValidation).not.toBe("");
+
     await nameInput.fill(contactsTerms.nameText);
     await emailInput.fill(contactsTerms.emailValid);
     await phoneInput.fill(contactsTerms.phoneInvalid);
     await commentInput.fill(contactsTerms.commentText);
     await sendButton.click();
+
+    // Use page.$eval for correct typing to access validationMessage
+    const invalidPhoneValidation = await page.$eval(
+      contactsTerms.phoneInput,
+      (el: HTMLInputElement) => el.validationMessage
+    );
+    console.log("Invalid phone validation:", invalidPhoneValidation);
+    expect(invalidPhoneValidation).not.toBe("");
   });
 });
