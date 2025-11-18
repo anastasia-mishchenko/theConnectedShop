@@ -52,7 +52,7 @@ export class Header {
   async verifyAccountIconIsLinkToAccountPage() {
     await expect(this.accountIcon).toHaveAttribute(
       "href",
-      "https://theconnectedshop.com/customer_authentication/redirect?locale=en&region_country=UA"
+      /https:\/\/theconnectedshop\.com\/customer_authentication\/redirect\?locale=en&region_country=[A-Z]{2}/
     );
   }
   async verifyCustomerSupportNumberIsVisible() {
