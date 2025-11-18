@@ -1,12 +1,10 @@
 import { test, expect } from "@playwright/test";
-import { searchTerms } from "./searchTerms";
-import { contactsTerms } from "./contactsTerms";
+import { searchTerms } from "../test-data/searchTerms";
+import { contactsTerms } from "../test-data/contactsTerms";
+import { HomePage } from "../pages/HomePage";
 //import searchTermsTest from './searchTermsTest.json' assert { type: 'json' };
 
 test.describe("Home Page", () => {
-  //   const VALID_SEARCH_TERM = "Smart Lock";
-  //   const INVALID_SEARCH_TERM = "Lorem ipsum";
-  //   const EMPTY_SEARCH_TERM = "   ";
   test("[UI][Smoke] Home Page UI elements", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveURL("/");
@@ -196,10 +194,8 @@ test.describe("Home Page", () => {
       contactsTerms.emailInput,
       (el: HTMLInputElement) => el.validationMessage
     );
-    console.log("Invalid email validation:", invalidEmailValidation);
-    expect(invalidEmailValidation).not.toBe("");
-    console.log("Invalid email validation:", invalidEmailValidation);
-    expect(invalidEmailValidation).not.toBe("");
+      console.log("Invalid email validation:", invalidEmailValidation);
+      expect(invalidEmailValidation).not.toBe("");
 
     await nameInput.fill(contactsTerms.nameText);
     await emailInput.fill(contactsTerms.emailValid);

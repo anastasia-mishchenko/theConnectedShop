@@ -1,10 +1,13 @@
 import { expect, Page } from "@playwright/test";
+import { Header } from "./Header";
 
 export class HomePage {
   readonly page: Page;
+  readonly header: Header;
 
   constructor(page: Page) {
     this.page = page;
+    this.header = new Header(page);
   }
 
   async goto() {
