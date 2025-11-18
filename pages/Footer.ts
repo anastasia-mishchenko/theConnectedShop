@@ -24,7 +24,7 @@ export class Footer {
   readonly newsletterSection: Locator;
   readonly newsletterInput: Locator;
   readonly newsletterSubmitButton: Locator;
-
+  readonly alertSuccessNewsletter: Locator;
   // Footer Links
   readonly termsOfServiceLink: Locator;
   readonly privacyPolicyLink: Locator;
@@ -34,7 +34,7 @@ export class Footer {
   readonly faqLink: Locator;
 
   // Social Media Links
-  readonly twitterLink: Locator;
+  readonly xLink: Locator;
   readonly facebookLink: Locator;
   readonly pinterestLink: Locator;
   readonly instagramLink: Locator;
@@ -53,11 +53,11 @@ export class Footer {
     this.ourStorySection = page.locator(".footer").getByText("Our Story");
     this.aboutUsLink = page.locator(".footer a[href='/pages/about-us']");
     this.reviewsLink = page.locator(".footer a[href='/pages/reviews']");
-    this.techTalkLink = page.locator(".footer a[href='/pages/tech-talk']");
+    this.techTalkLink = page.locator(".footer a[href='/blogs/tech-talk']");
     this.pressLink = page.locator(".footer a[href='/pages/press']");
 
     // BBB Rating
-    this.bbbRating = page.locator(".footer").getByText("BBB Rating");
+    this.bbbRating = page.locator("//div[@class='footer-block__details-content']//a");
 
     // Contact Info
     this.contactInfoSection = page.locator(".footer").getByText("Contact Info");
@@ -70,8 +70,8 @@ export class Footer {
     // Newsletter
     this.newsletterSection = page.locator(".footer").getByText("Newsletter");
     this.newsletterInput = page.locator(".footer input[placeholder='Email']");
-    this.newsletterSubmitButton = page.locator(".footer button[type='submit']");
-
+    this.newsletterSubmitButton = page.locator("#FooterSubscribe");
+    this.alertSuccessNewsletter = page.locator("#Footer-Newsletter-success");
     // Footer Links
     this.termsOfServiceLink = page
       .locator(".footer")
@@ -91,12 +91,12 @@ export class Footer {
     this.faqLink = page.locator(".footer").getByRole("link", { name: /FAQ/i });
 
     // Social Media Links
-    this.twitterLink = page
+    this.xLink = page
       .locator(".footer")
       .getByRole("link", { name: /Twitter/i });
     this.facebookLink = page
       .locator(".footer")
-      .getByRole("link", { name: /Facebook/i });
+      .getByRole("link", { name: /Facebook/i }); 
     this.pinterestLink = page
       .locator(".footer")
       .getByRole("link", { name: /Pinterest/i });
@@ -180,13 +180,22 @@ export class Footer {
   }
 
   async verifySocialMediaLinksAreVisible() {
-    await expect(this.twitterLink).toBeVisible();
+    await expect(this.xLink).toBeVisible();
     await expect(this.facebookLink).toBeVisible();
     await expect(this.pinterestLink).toBeVisible();
     await expect(this.instagramLink).toBeVisible();
     await expect(this.youtubeLink).toBeVisible();
     await expect(this.tiktokLink).toBeVisible();
     await expect(this.linkedinLink).toBeVisible();
+  }
+  async verifySocialLinksAreCorrect() {
+    await expect(this.xLink).toHaveAttribute("href", "https://twitter.com/_ConnectedShop");
+    await expect(this.facebookLink).toHaveAttribute("href", "https://www.facebook.com/theconnectedshop");
+    await expect(this.pinterestLink).toHaveAttribute("href", "https://www.pinterest.com/TheConnectedShop");
+    await expect(this.instagramLink).toHaveAttribute("href", "https://www.instagram.com/theconnectedshop/");
+    await expect(this.youtubeLink).toHaveAttribute("href", "https://www.youtube.com/channel/UC_GC3VbckW1qEcuyOqVSbvQ");
+    await expect(this.tiktokLink).toHaveAttribute("href", "https://www.tiktok.com/@theconnectedshop");
+    await expect(this.linkedinLink).toHaveAttribute("href", "https://www.linkedin.com/company/87133943/");
   }
 
   async verifyCopyrightTextIsVisible() {
@@ -200,6 +209,20 @@ export class Footer {
   async verifyAboutUsLinkHref() {
     await expect(this.aboutUsLink).toHaveAttribute("href", /\/about-us/i);
   }
+
+  async verifyReviewsLinkHref() {
+    await expect(this.reviewsLink).toHaveAttribute("href", /\/reviews/i);
+  }
+  async verifyTechTalkLinkHref() {
+    await expect(this.techTalkLink).toHaveAttribute("href", /\/tech-talk/i);
+  }
+  async verifyPressLinkHref() {
+    await expect(this.pressLink).toHaveAttribute("href", /\/press/i);
+  }
+  async verifyBBBRatingLinkHref() {
+    await expect(this.bbbRating).toHaveAttribute("href", "https://www.bbb.org/us/fl/miami-beach/profile/ecommerce/connected-shop-inc-0633-92025167/#sealclick");
+  }
+
 
   async verifyContactUsLinkHref() {
     await expect(this.contactUsLink).toHaveAttribute(
@@ -218,5 +241,9 @@ export class Footer {
 
   async submitNewsletter() {
     await this.newsletterSubmitButton.click();
+  }
+
+  async verifyAlertSuccessNewsletterIsVisible() {
+    await expect(this.alertSuccessNewsletter).toBeVisible();
   }
 }
